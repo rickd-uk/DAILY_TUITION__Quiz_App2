@@ -1,0 +1,157 @@
+mkdir react-webpack
+cd react-webpack
+npm init -y
+
+mkdir public
+touch public/index.html
+
+npm i webpack webpack-cli --save-dev
+mkdir src
+touch src/index.js
+
+---------------------------------------------------
+                      index.js
+---------------------------------------------------
+const hello = document.createElement('div')
+hello.innerHTML = 'Hello from JS'
+document.body.append(hello)
+---------------------------------------------------
+
+touch webpack.config.js 
+
+---------------------------------------------------   
+                webpack.config.js
+---------------------------------------------------
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+};
+---------------------------------------------------
+
+
+---------------------------------------------------   
+                package.json
+---------------------------------------------------
+...
+"scripts": {
+    "build": "webpack"
+},
+---------------------------------------------------
+
+add .gitignore
+
+npm i html-webpack-plugin -D
+
+
+---------------------------------------------------   
+        update webpack.config.js to match:
+---------------------------------------------------
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "build"),
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    }),
+  ],
+};
+---------------------------------------------------
+
+npm i -D webpack-dev-server
+
+---------------------------------------------------   
+           add this to webpack.config.js
+---------------------------------------------------
+{
+  // ...,
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "build"),
+    },
+    port: 3000,
+  }
+}
+---------------------------------------------------
+
+
+---------------------------------------------------   
+           add this to package.json
+---------------------------------------------------
+"start": "webpack serve --mode development"
+---------------------------------------------------
+
+npm start 
+
+npm i @babel/core @babel/preset-env babel-loader -D
+
+
+---------------------------------------------------   
+           add this to webpack.config.js
+---------------------------------------------------
+module: {
+    // exclude node_modules
+    rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
+  // pass all js files through Babel
+  resolve: {
+    extensions: ["*", ".js"],
+  }
+  ---------------------------------------------------
+
+
+  touch .babelrc
+
+---------------------------------------------------   
+           add this to .babelrc
+---------------------------------------------------
+  {
+  "presets": [
+    "@babel/preset-env"
+  ]
+}
+---------------------------------------------------
+
+npm i react react-dom 
+npm i @babel/preset-react -D 
+
+
+--------------------------------------------------------   
+   update .babelrc to apply preset-react & support JSX
+--------------------------------------------------------
+{
+    "presets": [
+      "@babel/preset-env",
+      ["@babel/preset-react", {
+      "runtime": "automatic"
+    }]
+    ]
+}
+--------------------------------------------------------
+
+
+Tip: Specifying the preset-react runtime as automatic enables a feature that no longer requires importing React on top of every file.
+
+
+---------------------------------------------------   
+           modify this in webpack.config.js
+---------------------------------------------------
+resolve: {
+    extensions: ["*", ".js", ".jsx"],    // <-- added `.jsx` here
+  },
