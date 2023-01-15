@@ -1,14 +1,17 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const dev = process.env.NODE_ENV !== 'production'
+
 module.exports = {
-	entry: './src/index.js',
+	entry: ['./src/index.js'],
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'build'),
 	},
+	devtool: dev ? 'eval-cheap-module-source-map' : 'source-map',
 	devServer: {
-		historyApiFallback: false,
+		historyApiFallback: true,
 		static: {
 			directory: path.join(__dirname, 'build'),
 		},

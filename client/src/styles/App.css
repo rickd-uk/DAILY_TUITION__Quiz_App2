@@ -67,6 +67,7 @@ html {
 	border: none;
 	border-radius: 0.1em;
 	font-size: 1.2em;
+	min-width: 110px;
 }
 
 .container .btn:hover {
@@ -80,9 +81,17 @@ html {
 	justify-self: flex-end;
 }
 
+.prev,
+.disabled {
+	justify-self: flex-start;
+}
+
 .prev {
 	background-color: #faff5a;
-	justify-self: flex-start;
+}
+
+.disabled {
+	background-color: #aaaaaa;
 }
 
 ul li {

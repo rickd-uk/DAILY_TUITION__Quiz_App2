@@ -36,3 +36,22 @@ export const useFetchQestion = () => {
 
 	return [getData, setGetData]
 }
+
+/** useDispatch can only be used inside a hook, not a function */
+
+/** MoveAction Dispatch function */
+export const MovePrevQuestion = () => async (dispatch) => {
+	try {
+		dispatch(Action.movePrevAction()) /** decrease by 1 */
+	} catch (error) {
+		log(error)
+	}
+}
+
+export const MoveNextQuestion = () => async (dispatch) => {
+	try {
+		dispatch(Action.moveNextAction()) /** increase by 1 */
+	} catch (error) {
+		log(error)
+	}
+}

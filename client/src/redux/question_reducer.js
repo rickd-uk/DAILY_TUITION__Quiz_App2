@@ -15,9 +15,21 @@ export const questionReducer = createSlice({
 				queue: action.payload,
 			}
 		},
+		movePrevAction: (state) => {
+			return {
+				...state,
+				trace: state.trace - 1,
+			}
+		},
+		moveNextAction: (state) => {
+			return {
+				...state,
+				trace: state.trace + 1,
+			}
+		},
 	},
 })
 
-export const { startExamAction } = questionReducer.actions
+export const { startExamAction, movePrevAction, moveNextAction } = questionReducer.actions
 
 export default questionReducer.reducer
