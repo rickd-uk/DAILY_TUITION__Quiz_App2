@@ -67,7 +67,6 @@ html {
 	border: none;
 	border-radius: 0.1em;
 	font-size: 1.2em;
-	min-width: 110px;
 }
 
 .container .btn:hover {

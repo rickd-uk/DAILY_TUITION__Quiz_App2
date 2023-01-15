@@ -7,18 +7,18 @@ import { PushAnswer } from '../hooks/SetResult'
 
 /** redux store import */
 import { useSelector, useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
 export default function Quiz() {
 	const [check, setChecked] = useState(undefined)
 	const [disabledBtn, setDisabledBtn] = useState(false)
 
-	const state = useSelector((state) => state)
+	const result = useSelector((state) => state.result.result)
 	const { queue, trace } = useSelector((state) => state.questions)
 
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		log(state)
 		trace == 0 && setDisabledBtn(true)
 	})
 
@@ -37,6 +37,11 @@ export default function Quiz() {
 	const onChecked = (num) => {
 		console.log(num)
 		setChecked(num)
+	}
+
+	/** Exam finishes after last question */
+	if (result.length && result.length >= queue.length) {
+		return <Navigate to={'/result'} replace={true} />
 	}
 
 	return (
