@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import log from '../utils/output.js'
 
 import Questions from './Questions.js'
-import { MovePrevQuestion, MoveNextQuestion } from '../hooks/FetchQuestion.js'
+import { MovePrevQuestion, MoveNextQuestion } from '../hooks/FetchQuestion'
 import { PushAnswer } from '../hooks/SetResult'
 
 /** redux store import */
@@ -19,6 +18,7 @@ export default function Quiz() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
+		console.log(result)
 		trace == 0 && setDisabledBtn(true)
 	})
 
@@ -30,7 +30,10 @@ export default function Quiz() {
 		if (trace < queue.length) {
 			dispatch(MoveNextQuestion())
 
-			dispatch(PushAnswer(check))
+			/** insert new result in array */
+			if (result.length <= trace) {
+				dispatch(PushAnswer(check))
+			}
 		}
 	}
 
@@ -51,9 +54,11 @@ export default function Quiz() {
 			<Questions onChecked={onChecked} />
 
 			<div className='grid'>
-				<button className={`btn ${trace == 0 ? 'disabled' : 'prev'}`} onClick={onPrev} disabled={!disabledBtn}>
-					Prev
-				</button>
+				{trace > 0 && (
+					<button className={`btn ${trace == 0 ? 'disabled' : 'prev'}`} onClick={onPrev} disabled={!disabledBtn}>
+						Prev
+					</button>
+				)}
 				<button className='btn next' onClick={onNext}>
 					Next
 				</button>
