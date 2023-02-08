@@ -17,10 +17,10 @@ export default function Quiz() {
 
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		console.log(result)
-		trace == 0 && setDisabledBtn(true)
-	})
+	// useEffect(() => {
+	// 	console.log(result)
+	// 	trace == 0 && setDisabledBtn(true)
+	// })
 
 	const onPrev = () => {
 		trace > 0 && dispatch(MovePrevQuestion())
@@ -35,6 +35,9 @@ export default function Quiz() {
 				dispatch(PushAnswer(check))
 			}
 		}
+
+		/** reset the value of the checked variable  */
+		setChecked(undefined)
 	}
 
 	const onChecked = (num) => {

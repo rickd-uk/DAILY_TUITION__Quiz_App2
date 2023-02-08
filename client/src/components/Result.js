@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styles/Result.css'
 import { Link } from 'react-router-dom'
 
+import { attempts_Number, earnedPoints_Number, flagResult } from '../helper/helper'
+
 import ResultTable from './ResultTable'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 /** import actions */
 import { resetAllAction } from '../redux/question_reducer'
@@ -11,6 +13,19 @@ import { resetResultAction } from '../redux/result_reducer'
 
 export default function Result() {
 	const dispatch = useDispatch()
+	const {
+		questions: { queue, answers },
+		result: { result, userId },
+	} = useSelector((state) => state)
+
+	useEffect(() => {
+		console.log(flag)
+	})
+
+	const totalPoints = queue.length * 10
+	const attempts = attempts_Number(result)
+	const earnedPoints = earnedPoints_Number(result, answers, 10)
+	const flag = flagResult(totalPoints, earnedPoints)
 
 	const onRestart = () => {
 		dispatch(resetAllAction())
@@ -28,23 +43,25 @@ export default function Result() {
 				</div>
 				<div className='flex'>
 					<span>Quiz Points: </span>
-					<span className='bold'>34</span>
+					<span className='bold'>{totalPoints || 0}</span>
 				</div>
 				<div className='flex'>
 					<span>Total Questions</span>
-					<span className='bold'>5</span>
+					<span className='bold'>{queue.length || 0}</span>
 				</div>
 				<div className='flex'>
 					<span>Attempts</span>
-					<span className='bold'>3</span>
+					<span className='bold'>{attempts || 0}</span>
 				</div>
 				<div className='flex'>
 					<span>Total Points Earned</span>
-					<span className='bold'>30</span>
+					<span className='bold'>{earnedPoints || 0}</span>
 				</div>
 				<div className='flex'>
 					<span>Quiz Result</span>
-					<span className='bold'>Passed</span>
+					<span style={{ color: `${flag ? '#2aff95' : '#ff2a66'}` }} className='bold'>
+						{flag ? 'Passed' : 'Not Passed'}
+					</span>
 				</div>
 			</div>
 			<div className='start'>

@@ -155,3 +155,20 @@ Tip: Specifying the preset-react runtime as automatic enables a feature that no 
 resolve: {
     extensions: ["*", ".js", ".jsx"],    // <-- added `.jsx` here
   },
+
+
+
+
+
+---------------------------------------------------   
+           Backend server setup
+---------------------------------------------------
+npm init -y
+npm i express cors dotenv mongoose morgan
+
+
+---------------------------------------------------   
+      run server outside of dir (using prefix)
+---------------------------------------------------
+
+  npm run --prefix ./client/ start
