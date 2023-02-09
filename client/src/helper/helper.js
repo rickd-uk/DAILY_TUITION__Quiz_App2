@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import axios from 'axios'
 
 export function attempts_Number(result) {
 	return result.filter((r) => r !== undefined).length
@@ -25,4 +26,16 @@ export function flagResult(totalPoints, earnedPoints) {
 export function CheckUserExists({ children }) {
 	const auth = useSelector((state) => state.result.userId)
 	return auth ? children : <Navigate to={'/'} replace={true}></Navigate>
+}
+
+/* Get server data */
+export async function getServerData(url, cb) {
+	const data = await (await axios.get(url))?.data
+	return cb ? cb(data) : data
+}
+
+/* Post server data */
+export async function postServerData(url, result, cb) {
+	const data = await (await axios.post(url, result))?.data
+	return cb ? cb(data) : data
 }
