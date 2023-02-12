@@ -39,7 +39,7 @@ export default function Result() {
 			<div className='result flex-center'>
 				<div className='flex'>
 					<span>Username</span>
-					<span className='bold'>Firefly</span>
+					<span className='bold'>{userId}</span>
 				</div>
 				<div className='flex'>
 					<span>Quiz Points: </span>
